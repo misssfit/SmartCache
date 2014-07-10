@@ -1,0 +1,8 @@
+c:\users\kamil\documents\visual studio 2013\Projects\SmartCache\TestApp\bin\Debug\TestApp.exe.config
+c:\users\kamil\documents\visual studio 2013\Projects\SmartCache\TestApp\bin\Debug\TestApp.exe
+c:\users\kamil\documents\visual studio 2013\Projects\SmartCache\TestApp\bin\Debug\TestApp.pdb
+c:\users\kamil\documents\visual studio 2013\Projects\SmartCache\TestApp\bin\Debug\SmartCache.dll
+c:\users\kamil\documents\visual studio 2013\Projects\SmartCache\TestApp\bin\Debug\SmartCache.pdb
+c:\users\kamil\documents\visual studio 2013\Projects\SmartCache\TestApp\obj\Debug\TestApp.csprojResolveAssemblyReference.cache
+c:\users\kamil\documents\visual studio 2013\Projects\SmartCache\TestApp\obj\Debug\TestApp.exe
+c:\users\kamil\documents\visual studio 2013\Projects\SmartCache\TestApp\obj\Debug\TestApp.pdb
