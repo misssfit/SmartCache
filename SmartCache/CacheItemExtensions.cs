@@ -10,6 +10,10 @@ namespace SmartCache
     {
         public static string Key(this ICacheItem item)
         {
+            if (item is ICategorisedCacheItem)
+            {
+                return Key(item as ICategorisedCacheItem);
+            }
             return Key(item.GetType(), item.Id);
         }
 

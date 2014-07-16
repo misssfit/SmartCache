@@ -3,3 +3,8 @@ c:\users\kamil\documents\visual studio 2013\Projects\SmartCache\SmartCache\bin\D
 c:\users\kamil\documents\visual studio 2013\Projects\SmartCache\SmartCache\obj\Debug\SmartCache.csprojResolveAssemblyReference.cache
 c:\users\kamil\documents\visual studio 2013\Projects\SmartCache\SmartCache\obj\Debug\SmartCache.dll
 c:\users\kamil\documents\visual studio 2013\Projects\SmartCache\SmartCache\obj\Debug\SmartCache.pdb
+C:\Users\Kamil\Documents\SmartCache\SmartCache\obj\Debug\SmartCache.dll
+C:\Users\Kamil\Documents\SmartCache\SmartCache\obj\Debug\SmartCache.pdb
+C:\Users\Kamil\Documents\SmartCache\SmartCache\bin\Debug\SmartCache.dll
+C:\Users\Kamil\Documents\SmartCache\SmartCache\bin\Debug\SmartCache.pdb
+C:\Users\Kamil\Documents\SmartCache\SmartCache\obj\Debug\SmartCache.csprojResolveAssemblyReference.cache

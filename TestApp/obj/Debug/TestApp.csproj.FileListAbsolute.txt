@@ -6,3 +6,11 @@ c:\users\kamil\documents\visual studio 2013\Projects\SmartCache\TestApp\bin\Debu
 c:\users\kamil\documents\visual studio 2013\Projects\SmartCache\TestApp\obj\Debug\TestApp.csprojResolveAssemblyReference.cache
 c:\users\kamil\documents\visual studio 2013\Projects\SmartCache\TestApp\obj\Debug\TestApp.exe
 c:\users\kamil\documents\visual studio 2013\Projects\SmartCache\TestApp\obj\Debug\TestApp.pdb
+C:\Users\Kamil\Documents\SmartCache\TestApp\bin\Debug\TestApp.exe.config
+C:\Users\Kamil\Documents\SmartCache\TestApp\obj\Debug\TestApp.exe
+C:\Users\Kamil\Documents\SmartCache\TestApp\obj\Debug\TestApp.pdb
+C:\Users\Kamil\Documents\SmartCache\TestApp\bin\Debug\TestApp.exe
+C:\Users\Kamil\Documents\SmartCache\TestApp\bin\Debug\TestApp.pdb
+C:\Users\Kamil\Documents\SmartCache\TestApp\bin\Debug\SmartCache.dll
+C:\Users\Kamil\Documents\SmartCache\TestApp\bin\Debug\SmartCache.pdb
+C:\Users\Kamil\Documents\SmartCache\TestApp\obj\Debug\TestApp.csprojResolveAssemblyReference.cache
