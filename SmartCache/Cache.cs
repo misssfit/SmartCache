@@ -13,7 +13,7 @@ namespace SmartCache
     public class Cache : Singleton<Cache>, ISmartCache
     {
         private readonly Dictionary<Type, CacheLevel> _registeredTypes = new Dictionary<Type, CacheLevel>();
-        private List<string> _queue = new List<string>();
+        private Dictionary<string, object> _queue = new Dictionary<string, object>();
 
         public void RegisterTypes(CacheLevel level, params Type[] types)
         {
@@ -126,57 +126,47 @@ namespace SmartCache
 
             if (MemoryCache.Default.Contains(key) == false)
             {
-                //if (_queue.Contains(key) == false)
-                if(Start(key)==true)
+                lock (AcquireLock(key))
                 {
-                    //lock (_queue)
+                    if (MemoryCache.Default.Contains(key) == false)
                     {
-                      //  if (_queue.Contains(key) == false)
-                        {
-                   //         _queue.Add(key);
-                            var item = getAction();
-                            Add(item);
-                            lock (_queue)
-                            {
-                                _queue.Remove(key);
-                            }
-                            Console.WriteLine("Ev" + key);
-                            return (T) item;
-                        }
+                        var item = getAction();
+                        Add(item);
+
+                        _queue.Remove(key);
+
+                        Console.WriteLine("Ev" + key);
+                        return (T) item;
                     }
                 }
 
-                if (MemoryCache.Default.Contains(key) == false && _queue.Contains(key) == true)
-                {
-                    var contains = true;
-                    while (contains == true)
-                    {
-                        Thread.Sleep(10);
-                        lock (_queue)
-                        {
-                            contains = _queue.Contains(key);
-                        }
-                    }
-                }
+
             }
+
+
+
             return (T)MemoryCache.Default.Get(key);
 
         }
 
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        private bool Start(string key)
+        private object AcquireLock(string key)
         {
-            if (_queue.Contains(key))
+            lock (_queue)
             {
-                return false;
-            }
-            else
-            {
-                _queue.Add(key);
-                return true;
-
+                if (_queue.ContainsKey(key))
+                {
+                    return _queue[key];
+                }
+                else
+                {
+                    var obj = new object();
+                    _queue.Add(key, obj);
+                    return obj;
+                }
             }
         }
+
+
 
 
     }
