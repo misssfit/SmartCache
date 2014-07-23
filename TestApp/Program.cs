@@ -53,9 +53,9 @@ namespace TestApp
                 var aa = c.Get<A>(1);
                 var bb = c.Get<B>(1);
 
-                var res1 = GetValue(1000, 1003, p => c.Get(p, () => TestMethod(p)));
+                var res1 = GetValue(1000, 1050, p => c.Get(p, () => TestMethod(p)));
                 // var res2= GetValue(2000, 2200, TestMethod);
-                var res3 = GetValue(3000, 3003, p =>
+                var res3 = GetValue(3000, 3050, p =>
                   {
                       var x = c.Get<A>(p);
                       if (x == null)
@@ -95,43 +95,47 @@ namespace TestApp
             Stopwatch sw = new Stopwatch();
             sw.Start();
             var tasks = new List<Task>();
-            for (int k = 0; k < 3; k++)
+            for (int q = 0; q < 2; q++)
             {
+
                 for (int i = start; i < stop; i++)
                 {
-
-
-                    int i1 = i;
-                    var t1 = Task.Factory.StartNew(() =>
+                    for (int k = 0; k < 15; k++)
                     {
-                        lock (tasks)
+                        int i1 = i;
+                        var t1 = Task.Factory.StartNew(() =>
                         {
-
                             var x = aFunc(i1);
-                            Console.WriteLine(null == x);
-                            Console.WriteLine(i1 + " ** " + x);
-                        }
+                            //Console.WriteLine(null == x);
+                            //  Console.WriteLine(i1 + " ** " + x);
 
-                    });
-                    tasks.Add(t1);
+                            // Thread.Sleep(150);
+                        });
+                        tasks.Add(t1);
+                    }
                 }
             }
-            foreach (var task in tasks)
-            {
-                task.Wait();
-            }
+
+           
+                Task.WaitAll(tasks.ToArray());
+            Console.WriteLine(tasks.Count());
 
             sw.Stop();
             // Console.WriteLine(sw.Elapsed);
             return sw.Elapsed;
         }
-        private static int count = 0;
+        //private static int count = 0;
         private static A TestMethod(int p)
         {
-            count++;
-            Console.WriteLine("ACCESS DAL $$" + p);
-            Console.WriteLine("~~" + count);
-            Thread.Sleep(350);
+            //count++;
+            // Console.WriteLine("ACCESS DAL $$" + p);
+            // Console.WriteLine("~~" + count);
+
+            Thread.Sleep(550);
+
+            Console.WriteLine("Get" + p);
+
+
             return new A() { Id = p };
         }
     }

@@ -13,7 +13,7 @@ namespace SmartCache
     public class Cache : Singleton<Cache>, ISmartCache
     {
         private readonly Dictionary<Type, CacheLevel> _registeredTypes = new Dictionary<Type, CacheLevel>();
-        private Dictionary<string, object> _queue = new Dictionary<string, object>();
+        //private Dictionary<string, object> _queue = new Dictionary<string, object>();
 
         public void RegisterTypes(CacheLevel level, params Type[] types)
         {
@@ -33,20 +33,20 @@ namespace SmartCache
 
         public void Add<T>(T item) where T : ICacheItem
         {
-            MemoryCache.Default.Add(item.Key(), item, AbsoluteExpiration(item));
+            MemoryCache.Default.Add(item.Key(), item, AbsoluteExpiration<T>());
         }
 
 
         public void Add<T>(IEnumerable<T> item) where T : ICacheItem
         {
-            MemoryCache.Default.Add(item.Key(), item, AbsoluteExpiration(item));
+            MemoryCache.Default.Add(item.Key(), item, AbsoluteExpiration<T>());
         }
 
         public void Update<T>(T item) where T : ICacheItem
         {
             var key = CacheItemExtensions.Key(typeof(T), item.Id);
             MemoryCache.Default.Remove(key);
-            MemoryCache.Default.Add(item.Key(), item, AbsoluteExpiration(item));
+            MemoryCache.Default.Add(item.Key(), item, AbsoluteExpiration<T>());
         }
 
         public T Get<T>(int id) where T : ICacheItem
@@ -63,17 +63,12 @@ namespace SmartCache
             return result;
         }
 
-        private DateTime AbsoluteExpiration<T>(T item)
+        private DateTime AbsoluteExpiration<T>()
         {
             var date = DateTime.Now;
-            if (_registeredTypes.ContainsKey(typeof(T)) == true)
-            {
-                date = date.AddMinutes(_registeredTypes[typeof(T)].Minutes());
-            }
-            else
-            {
-                date = date.AddMinutes(CacheLevel.L1.Minutes());
-            }
+            date = date.AddMinutes(_registeredTypes.ContainsKey(typeof(T)) == true 
+                ? _registeredTypes[typeof(T)].Minutes() 
+                : CacheLevel.L1.Minutes());
 
             return date;
         }
@@ -117,57 +112,15 @@ namespace SmartCache
             throw new NotImplementedException();
         }
 
-        private object _o = new object();
-        private object _o2 = new object();
-
         public T Get<T>(int id, Func<T> getAction) where T : ICacheItem
         {
-            var key = CacheItemExtensions.Key(typeof(T), id);
-
+            var key = CacheItemExtensions.Key(typeof (T), id);
             if (MemoryCache.Default.Contains(key) == false)
             {
-                lock (AcquireLock(key))
-                {
-                    if (MemoryCache.Default.Contains(key) == false)
-                    {
-                        var item = getAction();
-                        Add(item);
-
-                        _queue.Remove(key);
-
-                        Console.WriteLine("Ev" + key);
-                        return (T) item;
-                    }
-                }
-
+                MemoryCache.Default.Add(key, new Lazy<T>(getAction, true), AbsoluteExpiration<T>());
 
             }
-
-
-
-            return (T)MemoryCache.Default.Get(key);
-
+            return (MemoryCache.Default.Get(key) as Lazy<T>).Value;
         }
-
-        private object AcquireLock(string key)
-        {
-            lock (_queue)
-            {
-                if (_queue.ContainsKey(key))
-                {
-                    return _queue[key];
-                }
-                else
-                {
-                    var obj = new object();
-                    _queue.Add(key, obj);
-                    return obj;
-                }
-            }
-        }
-
-
-
-
     }
 }
